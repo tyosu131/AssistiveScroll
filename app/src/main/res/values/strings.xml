@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">AssistiveScroll</string>
+    <string name="top">Top</string>
+    <string name="bottom">Bottom</string>
+    <string name="accessibility_service_description">画面をスクロールするための補助機能です</string>
+    <string name="accessibility_service_label">アシスティブ・スクロール</string>
+</resources>
