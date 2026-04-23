@@ -1,114 +1,92 @@
 # AssistiveScroll
 
-AssistiveScroll は、Android の AccessibilityService を利用して、画面スクロールをより楽にするための補助アプリです。
+AssistiveScroll is a utility app for Android that makes screen scrolling easier by using Android's AccessibilityService.
 
-片手操作時や長文閲覧時に、画面上のフローティングボタンから素早くスクロールできることを主目的として設計しています。  
-iOS の AssistiveTouch に着想を得つつ、Android の仕様に合わせて「スクロール補助」に機能を絞っています。
+It is designed primarily to help users scroll quickly from a floating on-screen button, especially during one-handed use or when reading long content.  
+While inspired by iOS AssistiveTouch, it narrows the focus to **scroll assistance** in a way that fits Android's platform constraints.
 
-## 特徴
+## Features
 
-- 画面上に常駐するフローティングボタン
-- ドラッグで好きな位置へ移動可能
-- 端へのスナップで邪魔になりにくい配置
-- 長押しからの上下スライドで可変速スクロール
-- スクロール方向を視覚的に示すインジケーター
-- アイドル時の半透明化・半隠し表示による視認性と非干渉性の両立
+- Floating button that stays on screen
+- Draggable position adjustment
+- Edge snapping to reduce obstruction
+- Variable-speed scrolling by long-pressing and sliding up or down
+- Visual indicator for scroll direction
+- Semi-transparent / partially hidden idle state for better visibility without getting in the way
 
-## このアプリが解決すること
+## What Problem This App Solves
 
-スマートフォンで次のような不便を感じる場面を想定しています。
+This app is built for situations where smartphone scrolling feels inconvenient, such as:
 
-- 長いWebページやSNS、記事を片手で読むのが面倒
-- 指を何度もスワイプするのが煩わしい
-- 端末サイズが大きく、スクロール操作がしづらい
-- 常駐ボタンは欲しいが、視界を邪魔してほしくない
+- Reading long web pages, social feeds, or articles with one hand
+- Repeated swipe gestures becoming tedious
+- Large screen devices making scrolling less comfortable
+- Wanting a persistent assistive button without having it block the screen
 
-AssistiveScroll は、最低限のUIでスクロール操作を補助することに集中しています。
+AssistiveScroll focuses on providing scroll assistance through a minimal UI.
 
-## 使い方
+## How to Use
 
-1. アプリを起動します
-2. ユーザー補助設定画面が開いたら、AssistiveScroll のアクセシビリティサービスを有効化します
-3. 画面上に表示されたフローティングボタンを操作します
+1. Launch the app
+2. When the accessibility settings screen opens, enable the AssistiveScroll accessibility service
+3. Operate the floating button displayed on the screen
 
-### 基本操作
+### Basic Interaction
 
-- **タップ**  
-  補助メニューを開くための起点操作
+- **Tap**  
+  Starting action for opening the assistive menu
 
-- **ドラッグ**  
-  ボタンを任意の位置へ移動
+- **Drag**  
+  Move the button to any position
 
-- **長押し → 上下スライド**  
-  スクロールモードに入ります  
-  ボタン中心付近では停止し、上下へ離すほどスクロール速度が上がります
+- **Long press → slide up / down**  
+  Enter scroll mode  
+  Scrolling stops near the center of the button, and speed increases as the finger moves farther up or down
 
-- **指を中心付近へ戻す**  
-  スクロール停止
+- **Move your finger back near the center**  
+  Stop scrolling
 
-- **指を離す**  
-  スクロール終了
+- **Release your finger**  
+  End scrolling
 
-## 設計方針
+## Design Principles
 
-このアプリは、機能を増やしすぎず、日常的に使える「手触り」を重視しています。
+This app emphasizes daily usability and tactile feel rather than adding too many features.
 
-特に重視している点は次の通りです。
+The main design priorities are:
 
-- スクロール補助という主目的からブレないこと
-- 片手利用でも扱いやすいこと
-- 常駐UIでも邪魔になりにくいこと
-- アニメーションや見た目を過剰にせず、軽快であること
-- Android の制約下で無理な機能を積まないこと
+- Staying focused on the core purpose of scroll assistance
+- Making one-handed use easier
+- Keeping the persistent UI from becoming intrusive
+- Avoiding excessive animation or visual noise
+- Not forcing features that conflict with Android platform limitations
 
-## 制限事項
+## Limitations
 
-Android の AccessibilityService と画面構造には制約があるため、以下には限界があります。
+Because Android AccessibilityService and screen structures have limitations, the following constraints apply:
 
-- すべてのアプリで同一品質の挙動になるとは限りません
-- コンテンツの「本当の最上端 / 最下端」を常に正確に取得できるわけではありません
-- WebView や独自描画アプリでは、スクロール結果に差が出ることがあります
-- iPhone のような一部システム統合挙動を、そのまま再現することはできません
+- Behavior may not be identical across all apps
+- The true top or bottom of content cannot always be detected precisely
+- Scroll results may differ in WebView-based apps or apps with custom rendering
+- Some system-level behaviors seen on iPhone cannot be reproduced as-is on Android
 
-そのため、AssistiveScroll は「完全自動のページ移動」よりも、**日常利用に耐えるスクロール補助** を優先しています。
+For that reason, AssistiveScroll prioritizes **practical scroll assistance for everyday use** rather than fully automated page navigation.
 
-## 必要な権限
+## Required Permissions
 
-このアプリは以下の仕組みを利用します。
+This app relies on the following mechanisms:
 
 - **AccessibilityService**
-  - スクロール操作の補助
-  - 画面上へのオーバーレイ表示
+  - Assists with scrolling actions
+  - Supports on-screen overlay behavior
 
-- **SYSTEM_ALERT_WINDOW 相当のオーバーレイ利用**
-  - フローティングボタン表示のため
-
-利用時は、必ずユーザー自身が明示的に設定を有効化してください。
-
-## 開発環境
-
-- Android Studio
-- Kotlin
-- Android AccessibilityService
-- Gradle
-
-## セットアップ
-
-```bash
-git clone https://github.com/tyosu131/AssistiveScroll.git
-cd AssistiveScroll
-
-Android Studio でプロジェクトを開き、必要に応じて Gradle Sync を実行してください。
-
-ビルド
-
-デバッグAPKの例:
-
+Open the project in Android Studio and run Gradle Sync if needed.
+Build
+Example for generating a debug APK:
 ./gradlew assembleDebug
 
-生成された APK を端末へインストールして動作確認できます。
-
-ディレクトリ概要
+You can then install the generated APK on a device and test it.
+Directory Structure
 AssistiveScroll/
 ├─ app/
 ├─ gradle/
@@ -116,30 +94,31 @@ AssistiveScroll/
 ├─ settings.gradle.kts
 ├─ gradlew
 └─ gradlew.bat
-今後の方針
 
-現時点では、以下の方針を重視しています。
+Roadmap
+At this stage, the project is focused on the following directions:
+Improving the quality of the scroll assistance experience
+Prioritizing responsiveness and stability of existing interactions
+Avoiding features that do not work well with Android platform constraints
+Refining it as a minimal tool suitable for daily use
+License
+No license has been added yet.
+Please add one if needed.
+- **Overlay usage equivalent to SYSTEM_ALERT_WINDOW**
+  - Required to display the floating button
 
-スクロール補助の完成度を高める
+Users must explicitly enable the necessary settings themselves before use.
 
-既存操作の軽さ・安定性を優先する
+## Development Environment
 
-Android仕様と相性の悪い機能は無理に入れない
+- Android Studio
+- Kotlin
+- Android AccessibilityService
+- Gradle
 
-常用できるミニマルなツールとして仕上げる
+## Setup
 
-ライセンス
+```bash
+git clone https://github.com/tyosu131/AssistiveScroll.git
+cd AssistiveScroll
 
-ライセンスは未設定です。
-必要に応じて追加してください。
-
-
-実務的には、これを少しだけ調整した版を使うのが良いです。  
-特に次の2点は入れた方がいいです。
-
-- スクショやGIFを後で追加する
-- 未完成機能はREADMEに書かない
-
-必要なら次に、**GitHub向けに見栄えを整えた完成版README.md** として、  
-バッジ・スクショ枠・日本語/英語の見出しまで含めて詰めます。
-::contentReference[oaicite:3]{index=3}
